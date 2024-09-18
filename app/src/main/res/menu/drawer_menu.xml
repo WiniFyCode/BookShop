@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mnuHome"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/mnuPortfolio"
+            android:icon="@drawable/ic_baseline_dashboard_24"
+            android:title="Danh Muc" />
+
+        <item
+            android:id="@+id/mnuAccount"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
+            android:title="Account" />
+
+        <item
+            android:id="@+id/mnuSetting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Setting"
+            />
+    </group>
+</menu>
