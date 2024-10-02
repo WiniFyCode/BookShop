@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookshop.Model.CHUDESACH;
 import com.example.bookshop.R;
+import com.example.bookshop.SERVER;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class CHUDE_APDAPTER extends RecyclerView.Adapter<CHUDEVIEWHOLDER> {
         CHUDESACH chudesach = chudedata.get(position);
         holder.tvTenchude.setText(chudesach.TenChuDe);
         // hinh se load tu server bang Picasso
+        Picasso.get().load(SERVER.hinhanh_url + chudesach.HinhChuDe).into(holder.imgChuDe);
     }
 
     @Override
