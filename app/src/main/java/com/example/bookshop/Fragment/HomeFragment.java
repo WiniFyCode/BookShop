@@ -88,44 +88,44 @@ public class HomeFragment extends Fragment {
     private void loadSach() {
         // B3:
         sachdata.clear();
-        Response.Listener<JSONArray> thanhcong = new Response.Listener<JSONArray>() {
+        Response.Listener<String> thanhcong = new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject object = response.getJSONObject(i);
-                        // Thêm dữ liệu vào danh sách sách
+            public void onResponse(String response) {
+                try {
+                    JSONArray jsonArray = new JSONArray(response);
+                    for (int i=0;i<jsonArray.length();i++){
+                        JSONObject sach = jsonArray.getJSONObject(i);
                         sachdata.add(new SACH(
-                                object.getString("Masach"),
-                                object.getString("Tensach"),
-                                object.getInt("Dongia"),
-                                object.getString("Mota"),
-                                object.getString("Hinhminhoa"),
-                                object.getString("Machude"),
-                                object.getString("Ngaycapnhat"),
-                                object.getInt("Soluongban")
-                        )); // Xóa dấu phẩy thừa ở đây
-                    } catch (JSONException e) {
-                        Toast.makeText(getContext(), "Lỗi lấy dữ liệu sách: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("Sach", "Loi: ", e);
+                                sach.getString("Masach"),
+                                sach.getString("Tensach"),
+                                sach.getString("Mota"),
+                                sach.getString("Hinhminhhoa"),
+                                sach.getString("Machude"),
+                                sach.getString("Ngaycapnhat"),
+                                sach.getInt("Dongia"),
+                                sach.getInt("Soluongban")
+                        ));
                     }
-                }
-                // Thông báo cho adapter dữ liệu đã thay đổi
-                sachAdapter.notifyDataSetChanged();
-            }
-        };
 
-        Response.ErrorListener thatbai = new Response.ErrorListener() {
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "LOI"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+
+            }};
+        Response.ErrorListener thatbai= new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Lỗi lấy dữ liệu sách: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "thất bại" + error, Toast.LENGTH_SHORT).show();
             }
         };
 
         // B1: Tạo request trong Volley
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(SERVER.laysach_url, thanhcong, thatbai);
+        //kiêểu Json mảng array dùng nếu dùng để lấy nhiều đối tượng
+        StringRequest stringRequest = new StringRequest(SERVER.laysach_url, thanhcong, thatbai);
+        // B2: Dùng request với Volley
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(stringRequest);
     }
 
 
